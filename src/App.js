@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import NavBar from "./components/NavBar"
+import ItemListContainer from "./components/ItemListContainer"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-         Ricitos de Oro - Articulos de peluqueria
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
 
-export default App;
+    //Mas adelante se implementara logica para saber si el usuario esta logueado o no, y si esta logueado traeria info del user
+
+    let loggedIn = true;
+
+    const links = [
+        {id:1, name:"Accesorios"}, 
+        {id:2, name:"Capilares"},
+        {id:3, name:"Herramientas"},
+        {id:4, name:"Equipamientos"},
+        {id:5, name:"Manicura"}
+    ]
+    
+    return (
+    <>
+        <NavBar id="ricitosDeOroBar" userName="Masha Masha" links={links} loggedIn={loggedIn}></NavBar> 
+        <ItemListContainer id='itemListContainer' greeting="Bienvenido a Ricitos de Oro"></ItemListContainer>
+    </>
+    )
+    
+    }
+
+export default App 
