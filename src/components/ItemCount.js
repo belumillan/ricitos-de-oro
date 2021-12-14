@@ -8,8 +8,11 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useStyles from './Styles';
 
 const ItemCount = ({stock, initial, onAddCallback}) => {
+
+    const styles = useStyles()
 
     const [total, setTotal] = useState(initial);
 
@@ -42,15 +45,7 @@ const ItemCount = ({stock, initial, onAddCallback}) => {
     return (
 
         <Box  
-            sx={{
-                marginTop: 8,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: 2,
-                width: 210
-          }}
+            className={styles.itemCountContainer}
         >
             <ToastContainer />
             <ButtonGroup variant="contained" size="large" fullWidth>
@@ -58,19 +53,13 @@ const ItemCount = ({stock, initial, onAddCallback}) => {
                 <Button
                     size="small"
                     onClick={handleIncrement}
-                    sx={{
-                        bgcolor:'#e0b241', 
-                        color: 'white', 
-                        '&:hover': {
-                            background: "#ebd8ab",
-                        }
-                    }}
+                    className={styles.addRemoveItemButton}
                     
                 >
                     <AddIcon/>
                 </Button>
                 
-                <Button disabled sx={{width:100}}>
+                <Button disabled className={styles.itemTotal}>
                     <Typography color='black' variant='button'>
                         {total}
                     </Typography>
@@ -79,12 +68,7 @@ const ItemCount = ({stock, initial, onAddCallback}) => {
                 <Button
                     size="small"
                     onClick={handleDecrement}
-                    sx={{bgcolor:'#e0b241', 
-                    color: 'white',
-                    '&:hover': {
-                        background: "#ebd8ab",
-                    }
-                }}
+                    className={styles.addRemoveItemButton}
                 >
                     <RemoveIcon/>
                 </Button>
@@ -94,13 +78,9 @@ const ItemCount = ({stock, initial, onAddCallback}) => {
                 variant="contained" 
                 onClick={addItemToCart}
                 size="large"
-                sx={{
-                bgcolor:'#e0b241', 
-                color: 'white',
-                '&:hover': {
-                    background: "#ebd8ab",
-                }}
-            }>
+                className={styles.counterButton}
+                sx={{ width: 210}}
+            >
                 Agregar al Carrito
             </Button>
         </Box>
