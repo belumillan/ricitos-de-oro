@@ -1,31 +1,41 @@
 import NavBar from "./components/NavBar"
 import ItemListContainer from "./components/ItemListContainer"
-
+import { BrowserRouter, Router, Route } from "react-router-dom";
+import ItemDetailContainer from "./components/ItemDetailContainer";
 
 const App = () => {
 
-//Prueba de useState Hook, ver de usar react tostify para mostrar mensajes de alertas, ver useEffect
 //Cuando el estado cambia, si los props que se reciben o si el componente padre se esta volviendo a ejecutar cambian se vuelve a renderizar el componente , se puede usar el useEffect en ese caso, el return dentro del useEffect se ejecuta antes de que deje de existir el componente
 //Ver efecto useRef
 
-    //Mas adelante se implementara logica para saber si el usuario esta logueado o no, y si esta logueado traeria info del user
+    //Mas adelante se implementara logica para saber si el usuario esta logueado o no, y si esta logueado traeria info del user, necesito un estado inicial ({}), necesito un render inicial, un effect que se ejecute una sola vez para traer el detalle del item, agregar el contador al detalle del producto. item detail va a tener la funcion onAdd. El container se encarga de conseguir la info del producto
 
     let loggedIn = true;
 
     const links = [
-        {id:1, name:"Accesorios"}, 
-        {id:2, name:"Capilares"},
-        {id:3, name:"Herramientas"},
-        {id:4, name:"Equipamientos"},
-        {id:5, name:"Manicura"}
+        {id:1, name:"Accesorios", href:'/Accesories'}, 
+        {id:2, name:"Capilares", href:'/Hair'},
+        {id:3, name:"Herramientas", href: '/Tools'},
+        {id:4, name:"Equipamientos", href: '/Furniture'},
+        {id:5, name:"Manicura", href: '/Nails'}
     ]
     
     return (
-    <>
-        <NavBar id="ricitosDeOroBar" userName="Masha Masha" links={links} loggedIn={loggedIn}></NavBar> 
-        <ItemListContainer id='itemListContainer' greeting="Bienvenido a Ricitos de Oro"></ItemListContainer>
-
-    </>
+        <>
+            <NavBar id="ricitosDeOroBar" userName="Masha Masha" links={links} loggedIn={loggedIn}></NavBar> 
+            <ItemListContainer id='itemListContainer' greeting="Bienvenido a Ricitos de Oro"></ItemListContainer>
+        </>
+        
+        // <BrowserRouter>
+            
+            // <Routes>
+            //     <Route path='/products' element={<ItemListContainer greeting="Bienvenido a Ricitos de Oro"/> }></Route>
+            //     <Route path='/Category/:id' element={<ItemListContainer greeting="Bienvenido a Ricitos de Oro"/> }></Route>
+            //     <Route path='/product/:id' element={<ItemDetailContainer/>}></Route>
+            // </Routes>
+            
+        // </BrowserRouter>
+        
     )
     
     }

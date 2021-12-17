@@ -1,28 +1,11 @@
-import ItemCount from "./ItemCount"
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React from "react";
 import { useState, useEffect } from "react";
-import CircularProgress from '@mui/material/CircularProgress';
-import Stack from '@mui/material/Stack';
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
-import ItemList from "./ItemList";
+import ItemDetailContainer from "./ItemDetailContainer";
+import useStyles from "./Styles";
 
 const ItemListContainer = ({greeting}) => {
-    
-    //TODO: El container busca los items y se los pasa al itemList. El item list hace un map y muestra cada item, ver loader para los productos
-    const productStock = 15;
-    const itemInitialValue = 1;
-
-    const onAdd = (total) => {
-        
-        //Funcion que luego va a agregar la cantidad de items solicitados al carrito
-        toast.info(`Se han agregado: ${total} items al carrito`, 
-            { autoClose: 10000, 
-             position: toast.POSITION.BOTTOM_RIGHT,
-             hideProgressBar: true })
-    }
 
     const getFeaturedItems = () => {
 
@@ -53,12 +36,15 @@ const ItemListContainer = ({greeting}) => {
         })
     }, [])
 
+    const styles = useStyles()
+
     return (
         <>
             <h1 style={{textAlign:'center'}}>
                 {greeting}
             </h1>
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" className={styles.body}>
+{/*                
                 {!itemsLoaded ? (
                     <>
                     <Box sx={{display: 'flex', alignContent:'center', justifyContent:'center'}}>
@@ -72,9 +58,10 @@ const ItemListContainer = ({greeting}) => {
                 }
             
                 <ItemCount stock={productStock} initial={itemInitialValue} onAddCallback={onAdd}>
-                </ItemCount>
+                </ItemCount> */}
 
-                <ToastContainer />
+                <ItemDetailContainer itemId={6}></ItemDetailContainer>
+
             </Container>
         </>
     )
