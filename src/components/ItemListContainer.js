@@ -2,8 +2,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import React from "react";
 import { useState, useEffect } from "react";
 import Container from '@mui/material/Container';
-import ItemDetailContainer from "./ItemDetailContainer";
 import useStyles from "./Styles";
+import { useParams } from "react-router-dom"
+import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
+import Box from '@mui/material/Box';
+import ItemList from './ItemList';
 
 const ItemListContainer = ({greeting}) => {
 
@@ -25,16 +29,61 @@ const ItemListContainer = ({greeting}) => {
         })
     }
 
+    const getItemsByCategory = (category) => {
+
+        return new Promise((resolve, reject) => {
+
+            setTimeout(() => {
+                
+                let productList = []
+
+                if(category == 'Accesories')
+                {
+                    productList = [{id:1, title:'Cepillo secador y voluminizador', price: 8500.00, pictureUrl: '/cepillo secador.jpg'}]
+                }
+                else if (category == 'Hair')
+                {
+                    productList = [{id:2, title:'Kit Loreal Professionnel Pro Longer', price: 5850.00, pictureUrl: '/kit loreal pro longer.jpg'},
+                    {id:3, title:'Tigi Shampoo Resurrection', price: 3790.00, pictureUrl: '/tigi shampoo resurrection.jpg'},
+                    {id:4, title:'Schwarzkopf Tintura Crema Blondme', price: 815.00, pictureUrl: '/Schwarzkopf tintura blondeme.jpg'},
+                    {id:5, title:'Yellow Acondicionador liss', price: 2530.00, pictureUrl: '/acondicionador-liss-yellow.jpg'},
+                ]
+                }
+                else if(category == 'Tools')
+                {
+                    productList = [
+                        {id:6, title:'Babyliss plancha humedo-seco', price: 19990.00, pictureUrl: '/babyliss-plancha-humedo-seco.jpg'},
+                        {id:7, title:'Taiff planchita safira', price: 8245.00, pictureUrl: '/taiff-safira1-.jpg'}
+                    ]
+                }
+                resolve(productList)
+            }, 2000)
+        })
+    }
+
     const [featuredItems, setFeaturedItems] = useState([])
     const [itemsLoaded, setitemsLoaded] = useState(false)
+    const { id } = useParams()
 
     useEffect(() => {
 
-        getFeaturedItems().then((items) => {
-            setFeaturedItems(items)
-            setitemsLoaded(true)
-        })
-    }, [])
+        setitemsLoaded(false)
+       
+        if (id)
+        {
+            getItemsByCategory(id).then((items) => {
+                setFeaturedItems(items)
+                setitemsLoaded(true)
+            })
+        }
+        else {
+            
+            getFeaturedItems().then((items) => {
+                setFeaturedItems(items)
+                setitemsLoaded(true)
+            })
+        }
+    }, [id])
 
     const styles = useStyles()
 
@@ -44,7 +93,7 @@ const ItemListContainer = ({greeting}) => {
                 {greeting}
             </h1>
             <Container maxWidth="xl" className={styles.body}>
-{/*                
+               
                 {!itemsLoaded ? (
                     <>
                     <Box sx={{display: 'flex', alignContent:'center', justifyContent:'center'}}>
@@ -56,11 +105,6 @@ const ItemListContainer = ({greeting}) => {
                     </>) :
                         (<ItemList items={featuredItems}></ItemList>)
                 }
-            
-                <ItemCount stock={productStock} initial={itemInitialValue} onAddCallback={onAdd}>
-                </ItemCount> */}
-
-                <ItemDetailContainer itemId={6}></ItemDetailContainer>
 
             </Container>
         </>

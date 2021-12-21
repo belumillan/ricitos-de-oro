@@ -1,5 +1,3 @@
-import { Crop } from "@mui/icons-material";
-import { jss } from "react-jss";
 import { createUseStyles } from "react-jss";
 
 const useStyles = createUseStyles({
@@ -15,7 +13,7 @@ const useStyles = createUseStyles({
             background: "#ebd8ab",
         },
         width: 200,
-        borderRadius: 50
+        borderRadius: 50 
     },
 
     cardContent: {

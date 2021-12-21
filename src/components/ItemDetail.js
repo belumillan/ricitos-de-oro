@@ -1,7 +1,7 @@
 import { Box } from "@mui/system"
 import Grid from '@mui/material/Grid';
 import ImageGallery from "./ImageGallery";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useStyles from "./Styles";
 import { Typography } from "@mui/material";
 import { ToastContainer, toast } from 'react-toastify';
@@ -39,26 +39,74 @@ const ItemDetail = ({item}) => {
                         newImage = {
                             id:100,
                             title:'Babyliss plancha humedo-seco 1', 
-                            pictureUrl: 'babyliss-plancha-humedo-seco.jpg'}
+                            pictureUrl: '/babyliss-plancha-humedo-seco.jpg'}
                             break;
                     case 102:
                         newImage = {
                             id:102,
                             title:'Babyliss plancha humedo-seco 2', 
-                            pictureUrl: 'babyliss-plancha-humedo-seco_2.jpg'}
+                            pictureUrl: '/babyliss-plancha-humedo-seco_2.jpg'}
                             break;
                     case 103:
                         newImage = {
                             id:103,
                             title:'Babyliss plancha humedo-seco 3', 
-                            pictureUrl: 'babyliss-plancha-humedo-seco_3.jpg'}
+                            pictureUrl: '/babyliss-plancha-humedo-seco_3.jpg'}
                             break;
                     case 104:
                         newImage = {
                             id:104,
                             title:'Babyliss plancha humedo-seco 4', 
-                            pictureUrl: 'babyliss-plancha-humedo-seco_4.jpg'}
+                            pictureUrl: '/babyliss-plancha-humedo-seco_4.jpg'}
                             break;
+                    case 200:
+                        newImage = {
+                            id:200,
+                            title:'Cepillo secador y voluminizador', 
+                            pictureUrl: '/cepillo secador.jpg'}
+                            break;
+                    case 201:
+                        newImage = {
+                            id:200,
+                            title:'Cepillo secador y voluminizador2', 
+                            pictureUrl: '/revlon image 1.jpg'}
+                            break; 
+                    case 300:
+                        newImage = {
+                            id:300,
+                            title:'Loreal1', 
+                            pictureUrl: '/kit loreal pro longer.jpg'}
+                            break;  
+                    case 301:
+                        newImage = {
+                            id:301,
+                            title:'Loreal2', 
+                            pictureUrl: '/loreal 2.jpg'}
+                            break; 
+                    case 400:
+                        newImage = {
+                            id:400,
+                            title:'tigi1', 
+                            pictureUrl: '/tigi shampoo resurrection.jpg'}
+                            break;    
+                    case 500:
+                        newImage = {
+                            id:500,
+                            title:'schwarz1', 
+                            pictureUrl: '/Schwarzkopf tintura blondeme.jpg'}
+                            break; 
+                    case 501:
+                        newImage = {
+                            id:501,
+                            title:'schwarz2', 
+                            pictureUrl: '/schwarz 2.jpg'}
+                            break;   
+                    case 600:
+                        newImage = {
+                            id:600,
+                            title:'yellow0', 
+                            pictureUrl: '/acondicionador-liss-yellow.jpg'}
+                            break;   
                     default:
                         break
                 }

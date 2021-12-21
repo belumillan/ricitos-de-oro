@@ -11,12 +11,15 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CartWidget from './CartWidget';
+import { Link, NavLink } from "react-router-dom"
+import useStyles from './Styles';
 
 const NavBar = ({userName, links, loggedIn}) => {
 
    // cart widget mostrar icono que va en el nav bar
    // item list container -> componente que solo muestra mensaje en pantalla que viene de una prop 
-   
+   const styles = useStyles()
+
    function stringToColor(string) {
     let hash = 0;
     let i;
@@ -53,12 +56,14 @@ const NavBar = ({userName, links, loggedIn}) => {
     <AppBar position="static">
         <Container maxWidth="xl" sx={{bgcolor:'#e0b241'}}>
           <Toolbar disableGutters>
-            
+          <NavLink to="/">
             <Avatar
-                alt="Ricitos de Oro"
-                src="/golden-curls.png"
-                sx={{ width: 56, height: 56 }}
-            />
+                  alt="Ricitos de Oro"
+                  src="/golden-curls.png"
+                  sx={{ width: 56, height: 56 }}
+              />
+          </NavLink>
+
             <Typography
               variant="h6"
               noWrap
@@ -93,12 +98,16 @@ const NavBar = ({userName, links, loggedIn}) => {
 
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, alignContent:'center', justifyContent:'center', gap:'30px' }}>
               { links.map((link) => (
-                <Button
-                  key={link.id}
-                  sx={{ my: 2, color: 'white', display: 'block' }}
-                >
-                  {link.name}
-                </Button>
+
+                  <NavLink key={link.id} to={link.href} style={({isActive}) => { return {textDecoration: "none", backgroundColor: isActive ? '#ef6c00' : ''}} }>
+                    <Button
+                    key={link.id}
+                    sx={{ my: 2, color: 'white', display: 'block' }}
+                    >
+                    {link.name}
+                    </Button>
+                  </NavLink>
+
               ))}
             </Box>
 
