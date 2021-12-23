@@ -106,7 +106,19 @@ const ItemDetail = ({item}) => {
                             id:600,
                             title:'yellow0', 
                             pictureUrl: '/acondicionador-liss-yellow.jpg'}
-                            break;   
+                            break;  
+                    case 700:
+                        newImage = {
+                            id:700,
+                            title:'zafira0', 
+                            pictureUrl: '/taiff-safira1-.jpg'}
+                            break;
+                    case 701:
+                        newImage = {
+                            id:701,
+                            title:'zafira1', 
+                            pictureUrl: '/zafira2.jpg'}
+                            break;    
                     default:
                         break
                 }

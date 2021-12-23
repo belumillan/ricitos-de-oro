@@ -116,6 +116,23 @@ const ItemDetailContainer = () => {
                         ]
                     }
                 }
+                else if(itemId === '7')
+                {
+                    item = {
+                        id:7,
+                        title:'Taiff planchita safira', 
+                        price: 8245.00, 
+                        pictureUrl: '/taiff-safira1-.jpg',
+                        stock: 3,
+                        code: 4520,
+                        description: 'Taiff planchita safira',
+                        thumbnails: [
+                            {id: 700, thumbUrl:'/zafira thumb0.jpg', title:'zafira0'},
+                            {id: 701, thumbUrl:'/zafira thumb1.jpg', title:'zafira1'},
+
+                        ]
+                    }
+                }
                 resolve (item)
 
             }, 2000)
