@@ -19,6 +19,7 @@ const ItemDetailContainer = () => {
         return new Promise((resolve, reject) => {
             
             setTimeout(()=> {
+               
                 let item = {}
                 if(itemId === '1')
                 {
@@ -33,7 +34,8 @@ const ItemDetailContainer = () => {
                         thumbnails: [
                             {id: 200, thumbUrl:'/revlon thumbnail.jpg', title:'revlon0'},
                             {id: 201, thumbUrl:'/revlon thumbnail 1.jpg', title:'revlon1'}
-                        ]
+                        ],
+                        monthlyPaymentAmount: 2833.33
                     }
                 }
                 else if(itemId === '2')
@@ -49,7 +51,8 @@ const ItemDetailContainer = () => {
                         thumbnails: [
                             {id: 300, thumbUrl:'/loreal thumbnail.jpg', title:'loreal0'},
                             {id: 301, thumbUrl:'/loreal thumbnail1.jpg', title:'loreal1'}
-                        ]
+                        ],
+                        monthlyPaymentAmount: 1950.00
                     }
                 }
                 else if(itemId === '3')
@@ -64,7 +67,8 @@ const ItemDetailContainer = () => {
                         description: 'Tigi Shampoo Resurrection',
                         thumbnails: [
                             {id: 400, thumbUrl:'/tigi thumbnail.jpg', title:'tigi0'},
-                        ]
+                        ],
+                        monthlyPaymentAmount: 1263.33
                     }
                 }
                 else if(itemId === '4')
@@ -80,7 +84,8 @@ const ItemDetailContainer = () => {
                         thumbnails: [
                             {id: 500, thumbUrl:'/schwarz thumbnail1.jpg', title:'schwarz0'},
                             {id: 501, thumbUrl:'/schwarz thumbnail2.jpg', title:'schwarz1'},
-                        ]
+                        ],
+                        monthlyPaymentAmount: 271.66
                     }
                 }
                 else if(itemId === '5')
@@ -95,7 +100,8 @@ const ItemDetailContainer = () => {
                         description: 'Yellow Acondicionador liss',
                         thumbnails: [
                             {id: 600, thumbUrl:'/yellow thumbnail.jpg', title:'yellow0'}
-                        ]
+                        ],
+                        monthlyPaymentAmount: 783.33
                     }
                 }
                 else if(itemId === '6')
@@ -113,7 +119,8 @@ const ItemDetailContainer = () => {
                             {id: 102, thumbUrl:'/thumb_babyliss_2.jpg', title:'babyliss2'},
                             {id: 103, thumbUrl:'/thumb_babyliss_3.jpg', title:'babyliss3'},
                             {id: 104, thumbUrl:'/thumb_babyliss_4.jpg', title:'babyliss4'},
-                        ]
+                        ],
+                        monthlyPaymentAmount: 6663.33
                     }
                 }
                 else if(itemId === '7')
@@ -130,7 +137,8 @@ const ItemDetailContainer = () => {
                             {id: 700, thumbUrl:'/zafira thumb0.jpg', title:'zafira0'},
                             {id: 701, thumbUrl:'/zafira thumb1.jpg', title:'zafira1'},
 
-                        ]
+                        ],
+                        monthlyPaymentAmount: 2748.33
                     }
                 }
                 resolve (item)

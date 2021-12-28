@@ -3,6 +3,7 @@ import ItemListContainer from "./components/ItemListContainer"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import useStyles from "./components/Styles";
+import Cart from "./components/Cart"
 
 const App = () => {
 
@@ -23,18 +24,16 @@ const App = () => {
     ]
     
     return (
-        // <>
-        //     <NavBar id="ricitosDeOroBar" userName="Masha Masha" links={links} loggedIn={loggedIn}></NavBar> 
-        //     <ItemListContainer id='itemListContainer' greeting="Bienvenido a Ricitos de Oro"></ItemListContainer>
-        // </>
 
         <BrowserRouter>
-        
+
              <NavBar id="ricitosDeOroBar" userName="Masha Masha" links={links} loggedIn={loggedIn}></NavBar> 
             <Routes>
+                <Route path='*' element={<h1>No existe la pagina</h1>} />
                 <Route path='/' element={<ItemListContainer greeting="Bienvenido a Ricitos de Oro"/> }></Route>
                 <Route path='/Category/:id' element={<ItemListContainer greeting="Bienvenido a Ricitos de Oro"/> }></Route>
                 <Route path='/item/:id' element={<ItemDetailContainer/>}></Route>
+                <Route path='/cart' element={<Cart></Cart>}></Route>
             </Routes>
   
         </BrowserRouter>

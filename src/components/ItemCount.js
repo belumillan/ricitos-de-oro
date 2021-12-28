@@ -53,13 +53,21 @@ const ItemCount = ({stock, initial, onAddCallback}) => {
                 <Button
                     size="small"
                     onClick={handleIncrement}
-                    className={styles.addRemoveItemButton}
-                    
+                    sx={{   backgroundColor:'#e0b241', 
+                            color: 'white', 
+                            width: 40,
+                            '&:hover': {
+                            background: "#ebd8ab",
+                            
+                    }}}
                 >
                     <AddIcon/>
                 </Button>
                 
-                <Button disabled className={styles.itemTotal}>
+                <Button disabled 
+                    sx={{   borderColor: "transparent",
+                            width: 130
+                    }}>
                     <Typography color='black' variant='button'>
                         {total}
                     </Typography>
@@ -68,7 +76,13 @@ const ItemCount = ({stock, initial, onAddCallback}) => {
                 <Button
                     size="small"
                     onClick={handleDecrement}
-                    className={styles.addRemoveItemButton}
+                    sx={{   backgroundColor:'#e0b241', 
+                            width: 40,     
+                            color: 'white', 
+                            '&:hover': {
+                            background: "#ebd8ab",
+                            
+                    }}}
                 >
                     <RemoveIcon/>
                 </Button>
@@ -78,8 +92,13 @@ const ItemCount = ({stock, initial, onAddCallback}) => {
                 variant="contained" 
                 onClick={addItemToCart}
                 size="large"
-                className={styles.counterButton}
-                sx={{ width: 210}}
+                sx={{ 
+                    width: 210,
+                    backgroundColor:'#e0b241', 
+                    color: 'white', 
+                    '&:hover': {
+                        background: "#ebd8ab",
+                    }}}
             >
                 Agregar al Carrito
             </Button>
