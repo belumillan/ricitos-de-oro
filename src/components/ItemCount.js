@@ -21,7 +21,7 @@ const ItemCount = ({stock, initial, onAddCallback}) => {
         if(total + 1 <= stock)
             setTotal(total + 1)
         else
-            toast.error(`Solo quedan disponibles: ${stock} items del producto`, 
+            toast.error(`Solo quedan disponibles: ${stock} unidades del producto`, 
             { autoClose: 7000, 
              position: toast.POSITION.BOTTOM_RIGHT,
              hideProgressBar: true })

@@ -41,7 +41,7 @@ const ItemDetailContainer = () => {
                 else if(itemId === '2')
                 {
                     item = {
-                        id:1,
+                        id:2,
                         title:'Kit Loreal Professionnel Pro Longer', 
                         price: 5850.00, 
                         pictureUrl: '/kit loreal pro longer.jpg',
@@ -58,7 +58,7 @@ const ItemDetailContainer = () => {
                 else if(itemId === '3')
                 {
                     item = {
-                        id:1,
+                        id:3,
                         title:'Tigi Shampoo Resurrection', 
                         price: 3790.00, 
                         pictureUrl: '/tigi shampoo resurrection.jpg',
@@ -74,7 +74,7 @@ const ItemDetailContainer = () => {
                 else if(itemId === '4')
                 {
                     item = {
-                        id:1,
+                        id:4,
                         title:'Schwarzkopf Tintura Crema Blondme', 
                         price: 815.00, 
                         pictureUrl: '/Schwarzkopf tintura blondeme.jpg',
@@ -91,7 +91,7 @@ const ItemDetailContainer = () => {
                 else if(itemId === '5')
                 {
                     item = {
-                        id:1,
+                        id:5,
                         title:'Yellow Acondicionador liss', 
                         price: 2530.00, 
                         pictureUrl: '/acondicionador-liss-yellow.jpg',

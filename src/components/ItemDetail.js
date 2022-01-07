@@ -10,6 +10,7 @@ import ItemCount from "./ItemCount";
 import { NavLink } from "react-router-dom";
 import Button from '@mui/material/Button';
 import CreditCardTwoToneIcon from '@mui/icons-material/CreditCardTwoTone';
+import { useCartContext } from "./CartContext";
 
 //Componente que se utiliza para mostrar el detalle de un item que se recibe como parametro, en este detalle tambien se muestran las imagenes asociadas al item.
 
@@ -17,6 +18,8 @@ const ItemDetail = ({item}) => {
 
     const styles = useStyles()
     
+    const { addItem } = useCartContext()
+
     const itemInitialValue = 1
     const [selectedImage, setSelectedImage] = useState(item.pictureUrl)
     const [showItemCount, setShowItemCount] = useState(true)
@@ -25,14 +28,20 @@ const ItemDetail = ({item}) => {
     const monthlyAmountFormatted = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(item.monthlyPaymentAmount)
 
     const onAdd = (total) => {
+
+        //Funcion que agrega la cantidad de items solicitados al carrito 
+        let itemAdded = addItem(item, total)
         
-        //Funcion que luego va a agregar la cantidad de items solicitados al carrito
-        toast.info(`Se han agregado: ${total} items al carrito`, 
-            { autoClose: 5000, 
+        if(itemAdded)
+        {
+            toast.info(`Se han agregado: ${total} ${item.title} al carrito`, 
+            { autoClose: 2000, 
              position: toast.POSITION.BOTTOM_RIGHT,
              hideProgressBar: true })
-        
+
              setShowItemCount(false)
+             
+        }
     }
 
     const onSelectNewImage = (imageId) => {

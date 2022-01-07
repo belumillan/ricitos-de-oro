@@ -11,14 +11,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CartWidget from './CartWidget';
-import { Link, NavLink } from "react-router-dom"
-import useStyles from './Styles';
+import { NavLink } from "react-router-dom"
 
 const NavBar = ({userName, links, loggedIn}) => {
-
-   // cart widget mostrar icono que va en el nav bar
-   // item list container -> componente que solo muestra mensaje en pantalla que viene de una prop 
-   const styles = useStyles()
 
    function stringToColor(string) {
     let hash = 0;

@@ -9,36 +9,63 @@ import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import { CardActionArea } from '@mui/material';
 import useStyles from './Styles';
 import { NavLink } from "react-router-dom"
+import { useCartContext } from "./CartContext";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Item = ({product}) => {
+
+    const { addItem } = useCartContext()
 
     const styles = useStyles()
     const priceFormatted = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(product.price)
 
+    //Al hacer click en comprar se agrega un item del producto y notifica
+    const buyItem = () => {
+
+        let itemAdded = addItem(product, 1)
+        
+        if(itemAdded)
+        {
+            toast.info(`Se ha agregado: ${product.title} al carrito`, 
+            { autoClose: 2000, 
+             position: toast.POSITION.BOTTOM_RIGHT,
+             hideProgressBar: true })
+        }
+    };
+
     return (
 
         <Card className={styles.card}>
-            <CardActionArea>
-                <CardMedia
-                component="img"
-                alt={product.title}
-                image={product.pictureUrl}
-                />
-                <CardContent className={styles.cardContent}>
-                    <Typography gutterBottom variant="body2" color="text.secondary"> 
-                        {product.title}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {priceFormatted}
-                    </Typography>
-                </CardContent>
-            </CardActionArea>
+            <NavLink key={`CardAction_${product.id}`} to={`/item/${product.id}`} style={{ textDecoration: "none" }}>
+                <CardActionArea>
+                    <CardMedia
+                    component="img"
+                    alt={product.title}
+                    image={product.pictureUrl}
+                    />
+                    <CardContent className={styles.cardContent}>
+                        <Typography gutterBottom variant="body2" color="text.secondary"> 
+                            {product.title}
+                        </Typography>
+                        <Typography gutterBottom variant="h5" component="div">
+                            {priceFormatted}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </NavLink>
             <CardActions sx={{ justifyContent: 'center'}}>
                     <Button sx={{backgroundColor:'#e0b241', color: 'white', '&:hover': {
-                        background: "#ebd8ab",
-                        },
-                        width: 200,
-                        borderRadius: 50}} variant="contained" size="small" startIcon={<ShoppingBagIcon />}>Comprar</Button>
+                                background: "#ebd8ab",
+                                },
+                                width: 200,
+                                borderRadius: 50}} 
+                        variant="contained" 
+                        size="small" 
+                        startIcon={<ShoppingBagIcon />}
+                        onClick={buyItem}
+                        >Comprar
+                        </Button>
                     {/* <Button className={styles.itemButton} variant="contained" size="small" startIcon={<VisibilityIcon />}>Ver</Button> */}
                     
                     
@@ -47,10 +74,17 @@ const Item = ({product}) => {
                             background: "#ebd8ab",
                             },
                             width: 200,
-                            borderRadius: 50, marginLeft: 1 }} variant="contained" size="small" startIcon={<VisibilityIcon />}>Ver</Button>
+                            borderRadius: 50, marginLeft: 1 }} 
+                            variant="contained" 
+                            size="small" 
+                            startIcon={<VisibilityIcon />}
+                            >
+                                Ver
+                            </Button>
                     </NavLink> 
                    
             </CardActions>
+            <ToastContainer />
       </Card>
 
     )
