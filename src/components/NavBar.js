@@ -12,8 +12,11 @@ import Tooltip from '@mui/material/Tooltip';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CartWidget from './CartWidget';
 import { NavLink } from "react-router-dom"
+import { useCartContext } from './CartContext';
 
 const NavBar = ({userName, links, loggedIn}) => {
+
+    const { itemQuantity } = useCartContext()
 
    function stringToColor(string) {
     let hash = 0;
@@ -128,8 +131,7 @@ const NavBar = ({userName, links, loggedIn}) => {
                         }
                     })()
                 }
-               <CartWidget></CartWidget>
-             
+                {itemQuantity > 0 ? (<CartWidget></CartWidget>) : (<></>)}
             </Box>
           </Toolbar>
         </Container>

@@ -15,9 +15,10 @@ const CustomProvider = ({children}) => {
     //Voy a guardar en estados la cantidad de total decitems del carrito y una lista con los productos
     const [itemQuantity,setItemQuantity] = useState(0)
     const [cartItems,setCartItems] = useState([])
+    const [cartTotal,setCartTotal] = useState(0)
 
     const addItem = (item, total) => {
-        debugger
+        
         //Si el item esta en el carrito solo incremento la cantidad, caso contrario lo agrego a la lista con la cantidad seleccionada
         let itemAdded = false
 
@@ -26,6 +27,8 @@ const CustomProvider = ({children}) => {
             const itemCopy = {...item}
             itemCopy.quantity = 0
             itemCopy.quantity += total
+            itemCopy.subtotal = itemCopy.quantity * item.price
+            setCartTotal(cartTotal + itemCopy.subtotal)
             setCartItems([...cartItems, itemCopy])
             setItemQuantity(itemQuantity + total)
             itemAdded = true
@@ -36,6 +39,8 @@ const CustomProvider = ({children}) => {
             if(itemFound.quantity + total <= itemFound.stock)
             {
                 itemFound.quantity += total
+                itemFound.subtotal = itemFound.quantity * itemFound.price
+                setCartTotal(cartTotal + itemFound.subtotal)
                 setItemQuantity(itemQuantity + total)
                 itemAdded = true
                 console.log(`Se agregaron ${total} unidades del item ${itemFound.id}:${itemFound.title} que ya existia en el carrito. Tengo ${itemFound.quantity} unidades en total`)
@@ -63,6 +68,7 @@ const CustomProvider = ({children}) => {
 
         if (index > -1) {
             
+            setCartTotal(cartTotal - itemFound.subtotal)
             items.splice(index, 1);
         
             setCartItems(items)
@@ -74,6 +80,7 @@ const CustomProvider = ({children}) => {
     const clear = () => {  
         setCartItems([]) 
         setItemQuantity(0) 
+        setCartTotal(0)
     }
 
     const isInCart = (id) => {
@@ -84,12 +91,44 @@ const CustomProvider = ({children}) => {
 
     }
 
+    const changeQuantity = (itemId, pmtQuantity) => {
+        
+        let itemFound = cartItems.find(c => c.id === itemId)
+        let quantity = parseInt(pmtQuantity)
+        if(itemFound)
+        {
+            if(quantity <= itemFound.stock)
+            {
+                let tmpQuantity = itemQuantity - itemFound.quantity
+                itemFound.quantity = quantity
+                let tmpSubtotal = cartTotal - itemFound.subtotal
+
+                itemFound.subtotal = itemFound.quantity * itemFound.price
+                setItemQuantity(tmpQuantity + quantity)
+                setCartTotal(tmpSubtotal + itemFound.subtotal)
+
+                console.log(`Se agregaron ${quantity} unidades del item ${itemFound.id}:${itemFound.title} que ya existia en el carrito. Tengo ${itemFound.quantity} unidades en total`)
+            }
+            else
+            {
+                let outOfStockMsg = `Solo quedan disponibles: ${itemFound.stock} unidades del producto. Por favor modifique la cantidad`
+                
+                toast.error(outOfStockMsg, 
+                    { autoClose: 3000, 
+                    position: toast.POSITION.BOTTOM_RIGHT,
+                    hideProgressBar: true })
+            }
+        }
+    }
+
     const contextValue = {
         itemQuantity, 
         cartItems, 
         addItem, 
         removeItem,
-        clear
+        clear,
+        cartTotal,
+        changeQuantity
     }
 
     return (

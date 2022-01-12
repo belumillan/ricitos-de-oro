@@ -3,6 +3,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { useCartContext } from './CartContext';
 import Badge from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
+import { NavLink } from "react-router-dom";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -18,14 +19,16 @@ const CartWidget = () => {
     const { itemQuantity } = useCartContext()
 
     return (
-        <IconButton
-            size="large"
-            color="inherit"
-        >
-            <StyledBadge badgeContent={itemQuantity} color="secondary">
-                <ShoppingCartIcon sx={{ width: 36, height: 36 }}/>
-            </StyledBadge>
-        </IconButton>
+        <NavLink key='cartButton' to={'/Cart'} style={({isActive}) => { return {textDecoration: "none", color: 'white'}} }>
+            <IconButton
+                size="large"
+                color="inherit"
+            >
+                <StyledBadge badgeContent={itemQuantity} color="secondary">
+                    <ShoppingCartIcon sx={{ width: 36, height: 36, color: 'white' }}/>
+                </StyledBadge>
+            </IconButton>
+        </NavLink>
     )
 }
 

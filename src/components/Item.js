@@ -48,7 +48,7 @@ const Item = ({product}) => {
                         <Typography gutterBottom variant="body2" color="text.secondary"> 
                             {product.title}
                         </Typography>
-                        <Typography gutterBottom variant="h5" component="div">
+                        <Typography gutterBottom variant="h5" component="div" sx={{ color: 'text.primary'}}>
                             {priceFormatted}
                         </Typography>
                     </CardContent>
