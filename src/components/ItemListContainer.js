@@ -8,56 +8,58 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import ItemList from './ItemList';
+import { db } from './firebase';
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 
 const ItemListContainer = ({greeting}) => {
 
+    const itemsCollection = collection(db, 'salonProducts')
+
     const getFeaturedItems = () => {
 
-        return new Promise((resolve, reject) => {
+        return getDocs(itemsCollection).then((snapshot) => {
 
-            setTimeout(() => {
-                resolve([
-                    {id:1, title:'Cepillo secador y voluminizador', price: 8500.00, pictureUrl: '/cepillo secador.jpg', stock: 5},
-                    {id:2, title:'Kit Loreal Professionnel Pro Longer', price: 5850.00, pictureUrl: '/kit loreal pro longer.jpg', stock: 15},
-                    {id:3, title:'Tigi Shampoo Resurrection', price: 3790.00, pictureUrl: 'tigi shampoo resurrection.jpg',stock: 15},
-                    {id:4, title:'Schwarzkopf Tintura Crema Blondme', price: 815.00, pictureUrl: 'Schwarzkopf tintura blondeme.jpg',stock: 4},
-                    {id:5, title:'Yellow Acondicionador liss', price: 2530.00, pictureUrl: 'acondicionador-liss-yellow.jpg',stock: 1},
-                    {id:6, title:'Babyliss plancha humedo-seco', price: 19990.00, pictureUrl: 'babyliss-plancha-humedo-seco.jpg',stock: 10},
-                    {id:7, title:'Taiff planchita safira', price: 8245.00, pictureUrl: 'taiff-safira1-.jpg',stock: 3}
-                ])
-            }, 2000)
-        })
+            let products = []
+            if(snapshot.size > 0)
+            {
+                products = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+            }
+            
+            return products
+        }
+
+        )
     }
 
     const getItemsByCategory = (category) => {
 
-        return new Promise((resolve, reject) => {
+        const q = query(
+            itemsCollection,
+            where('category','==',category),
+            orderBy('title', 'asc')
+        )
 
-            setTimeout(() => {
-                
-                let productList = []
-
-                if(category == 'Accesories')
-                {
-                    productList = [{id:1, title:'Cepillo secador y voluminizador', price: 8500.00, pictureUrl: '/cepillo secador.jpg',stock: 5}]
-                }
-                else if (category == 'Hair')
-                {
-                    productList = [{id:2, title:'Kit Loreal Professionnel Pro Longer', price: 5850.00, pictureUrl: '/kit loreal pro longer.jpg',stock: 15},
-                    {id:3, title:'Tigi Shampoo Resurrection', price: 3790.00, pictureUrl: '/tigi shampoo resurrection.jpg',stock: 15},
-                    {id:4, title:'Schwarzkopf Tintura Crema Blondme', price: 815.00, pictureUrl: '/Schwarzkopf tintura blondeme.jpg',stock: 4},
-                    {id:5, title:'Yellow Acondicionador liss', price: 2530.00, pictureUrl: '/acondicionador-liss-yellow.jpg',stock: 1},
-                ]
-                }
-                else if(category == 'Tools')
-                {
-                    productList = [
-                        {id:6, title:'Babyliss plancha humedo-seco', price: 19990.00, pictureUrl: '/babyliss-plancha-humedo-seco.jpg',stock: 10},
-                        {id:7, title:'Taiff planchita safira', price: 8245.00, pictureUrl: '/taiff-safira1-.jpg',stock: 3}
-                    ]
-                }
-                resolve(productList)
-            }, 2000)
+        return getDocs(q).then((snapshot) => {
+            
+            let products = []
+            if(snapshot.size > 0)
+            {
+                products = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+            }
+            
+            return products
+        }, function(err) {
+            console.log(err);
+          }
+        )
+        .catch((error) => {
+            console.log(error)
         })
     }
 
@@ -69,20 +71,23 @@ const ItemListContainer = ({greeting}) => {
 
         setitemsLoaded(false)
        
+        let getItemsPromise
+
         if (id)
         {
-            getItemsByCategory(id).then((items) => {
-                setFeaturedItems(items)
-                setitemsLoaded(true)
-            })
+            getItemsPromise =  getItemsByCategory(id)
         }
         else {
             
-            getFeaturedItems().then((items) => {
+            getItemsPromise = getFeaturedItems()
+        }
+
+        getItemsPromise.then((items) => {
                 setFeaturedItems(items)
                 setitemsLoaded(true)
-            })
-        }
+            }
+        )
+
     }, [id])
 
     const styles = useStyles()

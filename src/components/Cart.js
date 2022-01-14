@@ -157,6 +157,7 @@ const Cart = () => {
                                                         changeItemQuantity(e, row.id);
                                                     }}
                                                     size="small"
+                                                    InputProps={{ inputProps: { min: 1, max: row.stock } }}
                                                     />
                                             </TableCell>
                                             <TableCell align="right">{row.subtotal}</TableCell>

@@ -11,6 +11,8 @@ import { NavLink } from "react-router-dom";
 import Button from '@mui/material/Button';
 import CreditCardTwoToneIcon from '@mui/icons-material/CreditCardTwoTone';
 import { useCartContext } from "./CartContext";
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from './firebase';
 
 //Componente que se utiliza para mostrar el detalle de un item que se recibe como parametro, en este detalle tambien se muestran las imagenes asociadas al item.
 
@@ -45,110 +47,22 @@ const ItemDetail = ({item}) => {
     }
 
     const onSelectNewImage = (imageId) => {
-    //Por el momento se hace un mock para obtener imagen por id
-        return new Promise((resolve, reject) => {
-                    
-            setTimeout(()=> {
-
-                let newImage = {}
-
-                switch(imageId)
-                {
-                    case 100:
-                        newImage = {
-                            id:100,
-                            title:'Babyliss plancha humedo-seco 1', 
-                            pictureUrl: '/babyliss-plancha-humedo-seco.jpg'}
-                            break;
-                    case 102:
-                        newImage = {
-                            id:102,
-                            title:'Babyliss plancha humedo-seco 2', 
-                            pictureUrl: '/babyliss-plancha-humedo-seco_2.jpg'}
-                            break;
-                    case 103:
-                        newImage = {
-                            id:103,
-                            title:'Babyliss plancha humedo-seco 3', 
-                            pictureUrl: '/babyliss-plancha-humedo-seco_3.jpg'}
-                            break;
-                    case 104:
-                        newImage = {
-                            id:104,
-                            title:'Babyliss plancha humedo-seco 4', 
-                            pictureUrl: '/babyliss-plancha-humedo-seco_4.jpg'}
-                            break;
-                    case 200:
-                        newImage = {
-                            id:200,
-                            title:'Cepillo secador y voluminizador', 
-                            pictureUrl: '/cepillo secador.jpg'}
-                            break;
-                    case 201:
-                        newImage = {
-                            id:200,
-                            title:'Cepillo secador y voluminizador2', 
-                            pictureUrl: '/revlon image 1.jpg'}
-                            break; 
-                    case 300:
-                        newImage = {
-                            id:300,
-                            title:'Loreal1', 
-                            pictureUrl: '/kit loreal pro longer.jpg'}
-                            break;  
-                    case 301:
-                        newImage = {
-                            id:301,
-                            title:'Loreal2', 
-                            pictureUrl: '/loreal 2.jpg'}
-                            break; 
-                    case 400:
-                        newImage = {
-                            id:400,
-                            title:'tigi1', 
-                            pictureUrl: '/tigi shampoo resurrection.jpg'}
-                            break;    
-                    case 500:
-                        newImage = {
-                            id:500,
-                            title:'schwarz1', 
-                            pictureUrl: '/Schwarzkopf tintura blondeme.jpg'}
-                            break; 
-                    case 501:
-                        newImage = {
-                            id:501,
-                            title:'schwarz2', 
-                            pictureUrl: '/schwarz 2.jpg'}
-                            break;   
-                    case 600:
-                        newImage = {
-                            id:600,
-                            title:'yellow0', 
-                            pictureUrl: '/acondicionador-liss-yellow.jpg'}
-                            break;  
-                    case 700:
-                        newImage = {
-                            id:700,
-                            title:'zafira0', 
-                            pictureUrl: '/taiff-safira1-.jpg'}
-                            break;
-                    case 701:
-                        newImage = {
-                            id:701,
-                            title:'zafira1', 
-                            pictureUrl: '/zafira2.jpg'}
-                            break;    
-                    default:
-                        break
+    
+        const docRef = doc(db, "images", imageId.toString());
+        
+        getDoc(docRef).then((snapshot) => {
+            
+            if(snapshot.exists() > 0)
+            {
+                const newImage = {
+                    id: snapshot.id,
+                    ...snapshot.data()
                 }
-                
-                resolve (
-                    setSelectedImage(newImage.pictureUrl)
-                    )
 
-            }, 1000)
-
-    })
+                setSelectedImage(newImage.pictureUrl)
+            }
+        })
+        .catch()
 
     }
 
