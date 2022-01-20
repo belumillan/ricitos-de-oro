@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const cartContext = createContext()
@@ -12,14 +12,14 @@ export const useCartContext = () => {
 
 const CustomProvider = ({children}) => {
 
-    //Voy a guardar en estados la cantidad de total decitems del carrito y una lista con los productos
     const [itemQuantity,setItemQuantity] = useState(0)
     const [cartItems,setCartItems] = useState([])
     const [cartTotal,setCartTotal] = useState(0)
 
+    const freeShippingThreshold = 6000.00
+
     const addItem = (item, total) => {
-        
-        //Si el item esta en el carrito solo incremento la cantidad, caso contrario lo agrego a la lista con la cantidad seleccionada
+
         let itemAdded = false
 
         if(!isInCart(item.id)) {
@@ -32,7 +32,6 @@ const CustomProvider = ({children}) => {
             setCartItems([...cartItems, itemCopy])
             setItemQuantity(itemQuantity + total)
             itemAdded = true
-            console.log(`Se agrego el item ${itemCopy.id}:${itemCopy.title}. Tengo ${itemCopy.quantity} unidades en total`)
 
         } else {
             let itemFound = cartItems.find(c => c.id == item.id)
@@ -43,7 +42,6 @@ const CustomProvider = ({children}) => {
                 setCartTotal(cartTotal + itemFound.subtotal)
                 setItemQuantity(itemQuantity + total)
                 itemAdded = true
-                console.log(`Se agregaron ${total} unidades del item ${itemFound.id}:${itemFound.title} que ya existia en el carrito. Tengo ${itemFound.quantity} unidades en total`)
             }
             else
             {
@@ -106,8 +104,6 @@ const CustomProvider = ({children}) => {
                 itemFound.subtotal = itemFound.quantity * itemFound.price
                 setItemQuantity(tmpQuantity + quantity)
                 setCartTotal(tmpSubtotal + itemFound.subtotal)
-
-                console.log(`Se agregaron ${quantity} unidades del item ${itemFound.id}:${itemFound.title} que ya existia en el carrito. Tengo ${itemFound.quantity} unidades en total`)
             }
             else
             {
@@ -128,7 +124,8 @@ const CustomProvider = ({children}) => {
         removeItem,
         clear,
         cartTotal,
-        changeQuantity
+        changeQuantity,
+        freeShippingThreshold
     }
 
     return (

@@ -4,17 +4,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ItemDetailContainer from "./components/ItemDetailContainer";
 import useStyles from "./components/Styles";
 import Cart from "./components/Cart"
-import CustomProvider, { Provider } from "./components/CartContext";
+import CustomProvider from "./components/CartContext";
+import Order from "./components/Order";
+import PurchaseProvider from "./components/PurchaseContext";
 
 const App = () => {
 
-//Cuando el estado cambia, si los props que se reciben o si el componente padre se esta volviendo a ejecutar cambian se vuelve a renderizar el componente , se puede usar el useEffect en ese caso, el return dentro del useEffect se ejecuta antes de que deje de existir el componente
-//Ver efecto useRef
-
-    //Mas adelante se implementara logica para saber si el usuario esta logueado o no, y si esta logueado traeria info del user, necesito un estado inicial ({}), necesito un render inicial, un effect que se ejecute una sola vez para traer el detalle del item, agregar el contador al detalle del producto. item detail va a tener la funcion onAdd. El container se encarga de conseguir la info del producto
-
     let loggedIn = true;
-    const styles = useStyles()
 
     const links = [
         {id:1, name:"Accesorios", href:'/Category/Accesories'}, 
@@ -25,8 +21,9 @@ const App = () => {
     ]
     
     return (
-
+    <>
         <CustomProvider>
+        <PurchaseProvider>
             <BrowserRouter>
 
                 <NavBar id="ricitosDeOroBar" userName="Masha Masha" links={links} loggedIn={loggedIn}></NavBar> 
@@ -36,11 +33,13 @@ const App = () => {
                     <Route path='/Category/:id' element={<ItemListContainer greeting="Bienvenido a Ricitos de Oro"/> }></Route>
                     <Route path='/item/:id' element={<ItemDetailContainer/>}></Route>
                     <Route path='/cart' element={<Cart></Cart>}></Route>
+                    <Route path='/order' element={<Order></Order>}></Route>
                 </Routes>
     
             </BrowserRouter>
+            </PurchaseProvider>
         </CustomProvider>
-        
+    </>   
     )
     
     }

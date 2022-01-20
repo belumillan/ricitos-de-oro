@@ -13,7 +13,6 @@ import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import IconButton from '@mui/material/IconButton';
-import { fontStyle } from "@mui/system";
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -24,10 +23,10 @@ import TableRow from '@mui/material/TableRow';
 import DeleteIcon from '@mui/icons-material/Delete';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import TextField from '@mui/material/TextField';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 
-//Esta vista se muestra cuando no hay items en el carrito y tiene un boton para poder ir a la lista de items y agregar
 function NoItemsView () {
 
     return (
@@ -70,11 +69,9 @@ function NoItemsView () {
     )
 }
 
-//Este componente del carrito tiene dos vistas, una que muestra una lista con los items agregados y el total y otra cuando no hay items. En la lista de items puedo eliminar cada item por separado o vaciar el carrito. Tambien puedo cambiar la cantidad de items siempre y cuando no supere el stock.
 const Cart = () => {
 
     const { cartItems, 
-            addItem, 
             removeItem,
             clear,
             cartTotal,
@@ -142,7 +139,7 @@ const Cart = () => {
                                             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                             >
                                             <TableCell align="left">
-                                                <img src={row.picture} width="36" height="36"/>
+                                                <img src={row.picture} width="36" height="36" alt=""/>
                                             </TableCell>
                                             <TableCell component="th" scope="row">
                                                 {row.name}
@@ -282,8 +279,8 @@ const Cart = () => {
                                 </ListItem>
                                 <Divider variant="fullWidth" component="li" />
                             </List>
-                            <Box sx={{ display: 'flex', marginTop: 1, justifyContent: 'center' }}>
-                                <NavLink key='continue_shopping' to={`/`} style={{ textDecoration: "none", marginTop: 6 }}>
+                            <Box sx={{ display: 'flex', marginTop: 1, justifyContent: 'center', flexDirection: 'column'}}>
+                                <NavLink key='start_order' to={`/order`} style={{ textDecoration: "none"}}>
                                     <Button sx={{
                                         marginTop: 6,
                                         backgroundColor:'#e0b241', 
@@ -292,7 +289,23 @@ const Cart = () => {
                                         background: "#ebd8ab",
                                         },
                                         borderRadius: 50,
-                                        fontSize: 'medium'}} 
+                                        fontSize: 'medium',
+                                        width: '100%'}} 
+                                        variant="contained" startIcon={<ShoppingBagIcon fontSize="medium" />}>
+                                        Iniciar Compra
+                                    </Button>
+                                </NavLink>
+                                <NavLink key='continue_shopping' to={`/`} style={{ textDecoration: "none" }}>
+                                    <Button sx={{
+                                        marginTop: 2,
+                                        backgroundColor:'#e0b241', 
+                                        color: 'white', 
+                                        '&:hover': {
+                                        background: "#ebd8ab",
+                                        },
+                                        borderRadius: 50,
+                                        fontSize: 'medium',
+                                        width: '100%'}} 
                                         variant="contained" startIcon={<ChevronLeftIcon fontSize="medium" />}>
                                         Seguir Comprando
                                     </Button>
