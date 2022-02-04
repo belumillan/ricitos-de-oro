@@ -54,12 +54,9 @@ const ItemListContainer = ({greeting}) => {
             }
             
             return products
-        }, function(err) {
-            console.log(err);
-          }
+        }
         )
         .catch((error) => {
-            console.log(error)
         })
     }
 

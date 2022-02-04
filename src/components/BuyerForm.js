@@ -5,20 +5,33 @@ import { usePurchaseContext } from './PurchaseContext';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
+import { useEffect, useState } from "react";
 
 const BuyerForm = ({ currentStep, onHandleSubmit, onHandleBack, stepCount }) => {
 
     const StyledButton = styled(Button)(({ theme }) => ({
-            backgroundColor:'#e0b241', 
-            color: 'white', 
-            '&:hover': {
+        backgroundColor: '#e0b241',
+        color: 'white',
+        '&:hover': {
             background: "#ebd8ab",
-            },
-            borderRadius: 50,
- 
+        },
+        borderRadius: 50,
+
     }));
 
-    const {errors} = usePurchaseContext()
+    const { errors, loggedUser } = usePurchaseContext()
+    const [loggedIn, setLoggedIn] = useState(false)
+    const [buyerDataTitle, setBuyerDataTitle] = useState('Datos de contacto')
+    const [confirmEmailError, setConfirmEmailError] = useState('')
+
+    useEffect(() => {
+        
+        setLoggedIn(loggedUser.email != null)
+        if (loggedUser.email != null)
+            setBuyerDataTitle(`Comprar como '${loggedUser.email}'`)
+        else
+            setBuyerDataTitle('Datos de contacto')
+    }, [loggedUser]);
 
     const requiredDefault = {
         value: true,
@@ -58,17 +71,30 @@ const BuyerForm = ({ currentStep, onHandleSubmit, onHandleBack, stepCount }) => 
     ]
 
     const handleBuyerSubmit = (event) => {
+        
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        let doSubmit = true
 
-        const fData = {
-            email: data.get('email'),
-            buyerName: data.get('buyerName'),
-            lastName: data.get('lastName'),
-            phone: data.get('phone')
+        if (!loggedIn) {
+            if (data.get('email') != data.get('confirmation-email'))
+            {
+                setConfirmEmailError('Por favor confirme el email de contacto')
+                doSubmit = false
+            }  
         }
-
-        onHandleSubmit(fData, buyerValidations)
+        if(doSubmit)
+        {
+            const fData = {
+                email: loggedIn ? loggedUser.email : data.get('email'),
+                buyerName: data.get('buyerName'),
+                lastName: data.get('lastName'),
+                phone: data.get('phone')
+            }
+    
+            onHandleSubmit(fData, buyerValidations)
+        }
+        
     };
 
     const handleBack = (event) => {
@@ -78,25 +104,41 @@ const BuyerForm = ({ currentStep, onHandleSubmit, onHandleBack, stepCount }) => 
     return (
         <>
             <Typography variant="h6" gutterBottom textAlign='center'>
-                Datos de Contacto
+                {buyerDataTitle}
             </Typography>
             <Box component="form" onSubmit={handleBuyerSubmit} noValidate>
                 <Grid container spacing={3}>
-                    <Grid item xs={12}>
-                        <TextField
-                            required
-                            id="email"
-                            name="email"
-                            label="E-mail"
-                            fullWidth
-                            variant="standard"
-                            error={errors && errors.email ? true : false}
-                            helperText={errors?.email}
-                            color='warning'
-                        //onChange={(e) => handleEmailChange(e)}
-                        //value={email}
-                        />
-                    </Grid>
+                    {!loggedIn && (
+                        <>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    id="email"
+                                    name="email"
+                                    label="E-mail"
+                                    fullWidth
+                                    variant="standard"
+                                    error={errors && errors.email ? true : false}
+                                    helperText={errors?.email}
+                                    color='warning'
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    required
+                                    id="confirmation-email"
+                                    name="confirmation-email"
+                                    label="Confirmar E-mail"
+                                    fullWidth
+                                    variant="standard"
+                                    error={confirmEmailError != ''}
+                                    helperText={confirmEmailError}
+                                    color='warning'
+                                />
+                            </Grid>
+                        </>
+                    )}
+
                     <Grid item xs={12} sm={6}>
                         <TextField
                             required
@@ -107,9 +149,7 @@ const BuyerForm = ({ currentStep, onHandleSubmit, onHandleBack, stepCount }) => 
                             variant="standard"
                             color='warning'
                             helperText={errors?.buyerName}
-                            //onChange={(e) => handleBuyerNameChange(e)}
                             error={errors && errors.buyerName ? true : false}
-                        //value={buyerData.buyerName}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -122,9 +162,7 @@ const BuyerForm = ({ currentStep, onHandleSubmit, onHandleBack, stepCount }) => 
                             variant="standard"
                             color='warning'
                             helperText={errors?.lastName}
-                            //onChange={(e) => handleLastNameChange(e)}
                             error={errors && errors.lastName ? true : false}
-                        //value={buyerData.lastName}
                         />
                     </Grid>
                     <Grid item xs={12}>
@@ -138,8 +176,6 @@ const BuyerForm = ({ currentStep, onHandleSubmit, onHandleBack, stepCount }) => 
                             error={errors && errors.phone ? true : false}
                             color='warning'
                             helperText={errors?.phone}
-                        //onChange={(e) => handlePhoneChange(e)}
-                        //value={buyerData.phone}
                         />
                     </Grid>
                     <Grid item xs={12}>

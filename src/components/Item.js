@@ -20,7 +20,6 @@ const Item = ({product}) => {
     const styles = useStyles()
     const priceFormatted = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(product.price)
 
-    //Al hacer click en comprar se agrega un item del producto y notifica
     const buyItem = () => {
 
         let itemAdded = addItem(product, 1)

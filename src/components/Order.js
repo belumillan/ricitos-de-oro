@@ -16,13 +16,11 @@ import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import AddressForm from './AddressForm';
 import { usePurchaseContext } from './PurchaseContext';
 import { db } from './firebase';
-import { addDoc, collection, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import Stack from '@mui/material/Stack';
 import OrderItemList from './OrderItemList';
+import SimpleBackdrop from './SimpleBackdrop';
 
 const Order = () => {
 
@@ -54,21 +52,10 @@ const Order = () => {
     const { cartItems,
         cartTotal,
         clear,
-        freeShippingThreshold } = useCartContext()
+        freeShippingThreshold,
+        itemQuantity } = useCartContext()
 
     const { handleSubmit } = usePurchaseContext()
-
-    // const cartTotalFormatted = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(cartTotal)
-
-    // const orderItems = cartItems.map((ci) =>
-    // ({
-    //     id: ci.id,
-    //     name: ci.title,
-    //     description: `${ci.description} x ${ci.quantity}`,
-    //     picture: ci.pictureUrl,
-    //     stock: ci.stock,
-    //     subtotal: new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(ci.subtotal)
-    // }))
 
     useEffect(() => {
 
@@ -84,12 +71,8 @@ const Order = () => {
         setActiveStep(activeStep - 1);
     };
 
-    // const updateItemsStock = () => {
-
-    // }
-
     const placeOrder = () => {
-        debugger
+        
         if (buyerData && addressData) {
 
             setIsCreatingOrder(true)
@@ -101,10 +84,11 @@ const Order = () => {
                 items: cartItems,
                 date: serverTimestamp(),
                 total: cartTotal + shippingCost,
-                shippingCost: shippingCost
+                shippingCost: shippingCost,
+                status: 'Generada'
             })
                 .then((orderResult) => {
-                    debugger
+                    
                     setIsCreatingOrder(false)
                     setOrderId(orderResult.id)
                     clear()
@@ -113,7 +97,7 @@ const Order = () => {
                     setActiveStep(activeStep + 1)
                 })
                 .catch((error) => {
-                    debugger
+                    
                     setIsCreatingOrder(false)
                     return (<Alert severity="error">
                         <AlertTitle>Error al generar la orden</AlertTitle>
@@ -131,9 +115,9 @@ const Order = () => {
     }
 
     const handleNext = (data, validations) => {
-        debugger
+        
         let valid = handleSubmit(data, validations)
-        debugger
+        
         if (valid) {
             if (activeStep == 0) {
                 setBuyerData(data)
@@ -153,20 +137,7 @@ const Order = () => {
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <Backdrop
-                sx={{ color: '#B2B2B2', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-                open={isCreatingOrder}
-            >
-                <Box sx={{ display: 'flex', alignContent: 'center', justifyContent: 'center' }}>
-                    <Stack sx={{ color: 'grey.500' }} spacing={2}>
-                        <CircularProgress color="warning" size={100} sx={{ ml: 10 }} />
-                        <Typography variant="h4" gutterBottom align='center' sx={{ color: 'black', fontWeight: 'bold' }}>
-                            Procesando Orden ...
-                        </Typography>
-                    </Stack>
-                </Box>
-            </Backdrop>
-
+            <SimpleBackdrop isProcessing={isCreatingOrder} customText={'Procesando Orden ...'}></SimpleBackdrop>
             <Grid container spacing={3}>
                 <Grid item xs={12} md={8} lg={7}>
                     <Paper sx={{
@@ -211,7 +182,12 @@ const Order = () => {
                                 borderRadius: 10,
                             }}
                             elevation={3}>
-                            <OrderItemList shippingCostFormatted={shippingCostFormatted} finalTotalFormatted={finalTotalFormatted}>
+                            <OrderItemList 
+                            shippingCostFormatted={shippingCostFormatted} 
+                            finalTotalFormatted={finalTotalFormatted}
+                            cartItems={cartItems}
+                            cartTotal={cartTotal}
+                            itemQuantity={itemQuantity}>
                             </OrderItemList>
                             <Box sx={{ display: 'flex', marginTop: 1, justifyContent: 'center', flexDirection: 'column' }}>
                                 <NavLink key='review_cart' to={`/Cart`} style={{ textDecoration: "none" }}>

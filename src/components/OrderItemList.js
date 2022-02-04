@@ -5,11 +5,8 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { Typography } from "@mui/material";
-import { useCartContext } from './CartContext';
 
-const OrderItemList = ({shippingCostFormatted, finalTotalFormatted}) => {
-
-    const {cartItems, cartTotal, itemQuantity} = useCartContext()
+const OrderItemList = ({shippingCostFormatted, finalTotalFormatted, cartItems, cartTotal, itemQuantity}) => {
 
     const cartTotalFormatted = new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(cartTotal)
 

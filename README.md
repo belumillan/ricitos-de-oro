@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+# RICITOS DE ORO
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Es un e-commerce de productos de salon destinado para peluquerias y al publico en general.
 
-## Available Scripts
+  - Al ingresar al sitio se ve un lilstado con productos destacados y una barra de navegacion que permite filtrar por categorias. Esta contiene un link al carrito de compras y un menu para gestionar el perfil del usuario: permite crear cuenta o iniciar sesion en el caso de ya poseer una cuenta.
 
-In the project directory, you can run:
+  - Perfil de ususario: si el usuario no posee cuenta en el sitio, puede registrarse ingresando email y password. Una vez que creo su cuenta puede loguearse usando los mismos datos. 
+  Si esta logueado se visualizan en la barra de navegacion sus iniciales y un menu donde puede buscar un pedido y desloguearse (para este caso practico no se valido que el usuario logueado solo pueda buscar sus pedidos, sino que le permite ver el detalle de cualquier pedido existente).
 
-### `npm start`
+  - Detalle de producto: Para cada producto del listado se puede ver su imagen, una descripcion breve, el precio y da la opcion de poder comprar o ver detalle si se desea obtener mas informacion.
+  - En el carrito de compras se puede ver la lista con los productos elegidos y el total de la compra, se permite modificar la cantidad y eliminar cada uno de los productos. Desde el carrito se puede vaciarlo, volver a la pagina principal para seguir comprando o iniciar la compra.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  - Iniciar Compra: En esta pantalla se puede ver el detalle de la compra mas el costo de envio y hay un formulario donde permite ingresar los datos del comprador (nombre, apellido, telefono, domicilio, email en el caso de que no este logueado).Si los datos ingresados son correctos se genera la orden.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  - Detalle de la orden/pedido: a esta pantalla se accede cuando un usuario logueado accede a la opcion de buscar pedido, si ingreso un numero de pedido existente se muestra el detalle y el total de la compra 
 
-### `npm test`
+  - Se utilizo local storage para persistir el carrito de compras y el usuario logueado.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tecnologias utilizadas
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+El proyecto esta desarrollado principalmente en Reactjs y Javascript.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Se  utilizaron las siguientes librerias adicionales:
 
-### `npm run eject`
+- Material UI (MUI): se utilizo este framework para la interfaz del usuario porque es simple de usar, y tiene componentes reutilizables que permiten combinarlos sencillamente sin tener que agregar demasiados estilos adicionales
+(https://mui.com/)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- react-toastify: se utilizo para mostrar los mensajes, permite mostrar distintos tipos de mensajes con formato de notificaciones en distintos lugares de la pantalla segun se le indique. Se eligio porque es sencillo de configurar y permite mostrar tanto errores como info en un formato amigable para el usuario sin bloquear la pagina.
+(https://www.npmjs.com/package/react-toastify)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Firebase: se utilizo el servicio de base de datos Firestore para poder guardar productos, usuarios, categorias, ordenes de compra e imagenes de los productos.
+Tambien se utilizo el servicio de autenticacion por email y password para gestionar las cuentas del sitio.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Componentes principales
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- NavBar.js: Barra de navegacion que se muestra en la parte superior del sitio. Contiene al logo de la compania, menu con categorias, icono para gestionar la cuenta del usuario con menu desplegable e icono para acceder al carrito de compras
 
-## Learn More
+- ItemListContainer.js: Se encarga de hacer la busqueda de los items a mostrar (si filtra por categoria solo trae los que cumplan con ese criterio), este componente contiene al ItemList.
+    -ItemList.js: Muestra una lista con los items que se obtuvieron en ItemListContainer, la vista de cada item esta desarrollada en Item.js
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- ItemDetailContainer.js: Busca el detalle del item en la base de datos y se lo pasa al ItemDetail.js que es quien se encarga de mostrarlo.
+    - ItemDetail.js: Ademas de mostrar la info detallada del producto, contiene una galeria de imagenes desarrollada en el componente (ImageGallery.js) y un contador para elegir que cantidad de productos agregar al carrito (ItemCount.js). Si elijo finalizar la compra me dirige al carrito de compras.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Cart.js: Es la vista del carrito de compras, si hay items se muestra un listado con el detalle y precio y sino muestra que esta vacio y un boton para ir a la vista principal donde muestra el listado de productos. 
 
-### Code Splitting
+- Order.js: Muestra el detalle de la compra y contiene un formulario para ingresar los datos del comprador (Datos de contacto: BuyerForm.js y Domicilio: AddressForm.js)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- CartWidget.js: Icono del carrito que muestra la cantidad de items agregados y al hacer click va a la vista del carrito de compras
 
-### Analyzing the Bundle Size
+- Componentes para gestionar cuentas de usuarios:
+    - SignUp.js: permite ingresar datos para crear una nueva cuenta
+    - Login.js: permite loguearse en el sitio con email y password
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- OrderSearch.js: Dialog que permite buscar un pedido por numero
 
-### Making a Progressive Web App
+## Uso
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1. Clonar el repositorio 
+`git clone https://github.com/belumillan/ricitos-de-oro`
 
-### Advanced Configuration
+2. Ir a la carpeta donde se guardo el proyecto (por ejemplo)
+`cd Users\Usuario\Documents\GitHub\ricitos-de-oro\src`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+3. Instalar las librerias necesarias para que corra el proyecto
+`npm install`
 
-### Deployment
+4. Compilar el proyecto
+`npm start`
+Se compila en modo desarrollo, para verlo en el browser ir a: [http://localhost:3000](http://localhost:3000)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+`npm run build`
+Se compila para el ambiente de produccion en la carpeta `build` .\ 
+Se optimiza para mejor rendimiento
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

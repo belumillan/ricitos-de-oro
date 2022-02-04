@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { useLocalStorage } from "./localStorageHelper";
 
 const purchaseContext = createContext()
 
@@ -12,6 +13,12 @@ const PurchaseProvider = ({ children }) => {
 
     const [data, setData] = useState({})
     const [errors, setErrors] = useState({})
+    const [loggedUser, setLoggedUser] = useLocalStorage('loggedUser', {})
+
+    const saveUser = (user) => {
+
+        setLoggedUser(user)
+    }
 
     const handleChange = (key, e, sanitizeFn) => {
 
@@ -68,7 +75,9 @@ const PurchaseProvider = ({ children }) => {
         handleSubmit,
         handleChange,
         data,
-        errors
+        errors,
+        loggedUser,
+        saveUser
     }
 
     return (
