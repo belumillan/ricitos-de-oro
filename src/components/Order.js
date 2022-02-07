@@ -32,8 +32,6 @@ const Order = () => {
                 return <BuyerForm currentStep={step} onHandleSubmit={handleNext} onHandleBack={handleBack} stepCount={steps.length} />;
             case 1:
                 return <AddressForm currentStep={step} onHandleSubmit={handleNext} onHandleBack={handleBack} stepCount={steps.length} />;
-            // case 2:
-            //     return <PaymentForm />;
             default:
                 throw new Error('Unknown step');
         }
