@@ -76,4 +76,6 @@ Se compila en modo desarrollo, para verlo en el browser ir a: [http://localhost:
 Se compila para el ambiente de produccion en la carpeta `build` .\ 
 Se optimiza para mejor rendimiento
 
+## Ejemplo
 
+Se encuentra un video con el circuito de compra en el archivo: `Ricitos de Oro - Circuito de compra.mp4`
