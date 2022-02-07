@@ -59,11 +59,13 @@ También se utilizó el servicio de autenticación por email y contraseña para 
 
 ## Uso
 
+Para poder usar el proyecto es necesario tener instalado Node.js en la pc donde se corra. Se puede descargar desde (https://nodejs.org/es/)
+
 1. Clonar el repositorio 
 `git clone https://github.com/belumillan/ricitos-de-oro`
 
 2. Ir a la carpeta donde se guardo el proyecto (por ejemplo)
-`cd Users\Usuario\Documents\GitHub\ricitos-de-oro\src`
+`cd Users\Usuario\Documents\GitHub\ricitos-de-oro`
 
 3. Instalar las librerias necesarias para que corra el proyecto
 `npm install`

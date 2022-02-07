@@ -15,14 +15,6 @@ import OrderDetail from "./components/OrderDetail";
 
 const App = () => {
 
-    // const links = [
-    //     { id: 1, name: "Accesorios", href: '/Category/Accesories' },
-    //     { id: 2, name: "Capilares", href: '/Category/Hair' },
-    //     { id: 3, name: "Herramientas", href: '/Category/Tools' },
-    //     { id: 4, name: "Equipamientos", href: '/Category/Furniture' },
-    //     { id: 5, name: "Manicura", href: '/Category/Nails' }
-    // ]
-
     const [categories, setCategories] = useState([]);
 
     const categoriesCollection = collection(db, 'categories')

@@ -57,7 +57,7 @@ const Item = ({product}) => {
                     <Button sx={{backgroundColor:'#e0b241', color: 'white', '&:hover': {
                                 background: "#ebd8ab",
                                 },
-                                width: 200,
+                                width: 300,
                                 borderRadius: 50}} 
                         variant="contained" 
                         size="small" 
@@ -65,14 +65,12 @@ const Item = ({product}) => {
                         onClick={buyItem}
                         >Comprar
                         </Button>
-                    {/* <Button className={styles.itemButton} variant="contained" size="small" startIcon={<VisibilityIcon />}>Ver</Button> */}
-                    
-                    
+
                     <NavLink key={product.id} to={`/item/${product.id}`} style={{ textDecoration: "none" }}>
                         <Button sx={{backgroundColor:'#e0b241', color: 'white', '&:hover': {
                             background: "#ebd8ab",
                             },
-                            width: 200,
+                            width: 100,
                             borderRadius: 50, marginLeft: 1 }} 
                             variant="contained" 
                             size="small" 
